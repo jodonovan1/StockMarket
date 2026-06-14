@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Investor Challenge Tracker</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><div><h1>Investor Challenge Tracker</h1><p>Teacher dashboard for the market simulation</p></div>
+<div class="top-actions"><button id="exportBtn">Export Backup</button><label class="fileBtn">Import Backup <input id="importFile" type="file" accept="application/json"></label><button id="resetBtn" class="danger">Reset</button></div></header>
+<main>
+<section class="grid two">
+<div class="card"><h2>Market Board</h2><table id="marketTable"><thead><tr><th>Company</th><th>Ticker</th><th>Price</th><th>Change</th><th>Shares Available</th></tr></thead><tbody></tbody></table>
+<div class="market-controls"><label>Lesson<select id="lessonSelect"><option value="1">Lesson 1</option><option value="2">Lesson 2</option><option value="3">Lesson 3</option></select></label><button id="shuffleDeckBtn">Shuffle Deck</button><button id="drawCardBtn" class="primary">Draw Next Card</button><button id="undoCardBtn">Undo Last Card</button></div>
+<div id="drawnCard" class="event-card">No card drawn yet.</div><p id="tradeReminder" class="reminder">Draw two cards, then offer a trading round.</p></div>
+<div class="card"><h2>Investor Rewards Store</h2><table id="rewardsTable"><thead><tr><th>Prize Box</th><th>Price</th><th>Set Price</th></tr></thead><tbody></tbody></table><p class="hint">Update reward prices when inflation hits.</p></div>
+</section>
+<section class="grid two">
+<div class="card"><h2>Students</h2><div class="inline-form"><input id="studentName" placeholder="Student name / nickname / initials"><input id="studentCash" type="number" min="0" step="1" placeholder="Starting tickets"><button id="addStudentBtn" class="primary">Add Student</button></div><table id="studentsTable"><thead><tr><th>Name</th><th>Cash</th><th>QH</th><th>II</th><th>BZ</th><th>Bank</th><th>Total</th><th></th></tr></thead><tbody></tbody></table></div>
+<div class="card"><h2>Teacher Entry</h2><label>Student <select id="actionStudent"></select></label><div class="grid three compact"><label>Action<select id="actionType"><option value="buy">Buy Shares</option><option value="sell">Sell Shares</option><option value="spend">Buy Reward</option><option value="deposit">Bank Deposit</option><option value="withdraw">Withdraw Deposit</option><option value="cashAdjust">Adjust Cash</option></select></label><label>Company / Prize / Term<select id="actionTarget"></select></label><label>Amount<input id="actionAmount" type="number" step="1" value="1"></label></div><button id="applyActionBtn" class="primary">Apply Action</button><p class="hint">Bank deposits must be in 10-ticket lots. Selling is always back to the market.</p></div>
+</section>
+<section class="grid two">
+<div class="card"><h2>Portfolio History</h2><table id="historyTable"><thead><tr><th>Round</th><th>Student</th><th>Cash</th><th>Bank</th><th>QH Value</th><th>II Value</th><th>BZ Value</th><th>Total</th></tr></thead><tbody></tbody></table></div>
+<div class="card"><h2>Student Graph</h2><label>Graph student <select id="graphStudent"></select></label><canvas id="graphCanvas" width="720" height="360"></canvas></div>
+</section>
+<section class="card"><h2>Activity Log</h2><textarea id="logBox" readonly></textarea></section>
+</main><script src="app.js"></script></body></html>
