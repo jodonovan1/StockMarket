@@ -1,27 +1,18 @@
-# Investor Challenge Teacher Console v1
+# Investor Challenge Tracker
 
-This is a plain HTML/CSS/JavaScript app for GitHub Pages.
+Static GitHub Pages classroom tracker for the Investor Challenge simulation.
 
-## Files
+## Features
+- Teacher-only entry
+- Browser localStorage saving
+- Built-in Lesson 1, 2 and 3 market decks
+- Current share prices, last-change display and shares available
+- Reward price tracking
+- Student cash and QH/II/BZ share holdings
+- Buy, sell, spend, deposit and withdraw tools
+- Portfolio value history and simple graph
+- JSON export/import backup
 
-- `index.html`
-- `style.css`
-- `app.js`
-
-## How to run locally
-
-Open `index.html` in a browser.
-
-## How to host on GitHub Pages
-
-1. Create a new GitHub repository.
-2. Upload `index.html`, `style.css`, `app.js`, and `README.md`.
-3. Go to **Settings → Pages**.
-4. Set source to the `main` branch and `/root`.
-5. Open the published GitHub Pages URL.
-
-## Data storage
-
-All data is stored in the teacher's browser using `localStorage`.
-
-Use **Export JSON Backup** at the end of each lesson.
+## GitHub Pages
+Upload these files to a GitHub repo, then enable Pages from Settings -> Pages.
+Data is stored in the browser. Use Export Backup regularly.

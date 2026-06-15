@@ -1,179 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Investor Challenge Console v1</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Investor Challenge Tracker</title><link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div>
-      <h1>Investor Challenge</h1>
-      <p>Teacher-only console · Version 1</p>
-    </div>
-    <div id="saveStatus">Ready</div>
-  </header>
-
-  <nav>
-    <button data-tab="dashboard" class="active">Dashboard</button>
-    <button data-tab="students">Students</button>
-    <button data-tab="transactions">Transactions</button>
-    <button data-tab="cards">Market Cards</button>
-    <button data-tab="leaderboard">Leaderboard</button>
-    <button data-tab="backup">Backup / Export</button>
-  </nav>
-
-  <main>
-    <section id="dashboard" class="tab active">
-      <div class="grid2">
-        <div class="card">
-          <h2>Share Market</h2>
-          <table>
-            <thead>
-              <tr><th>Company</th><th>Price</th><th>Change</th><th>Shares Available</th></tr>
-            </thead>
-            <tbody id="marketBody"></tbody>
-          </table>
-          <button onclick="openMarketEditor()">Edit market</button>
-          <button onclick="saveSnapshot()">Save snapshot</button>
-        </div>
-
-        <div class="card">
-          <h2>Simulation Status</h2>
-          <div class="large" id="roundStatus">Lesson 1 · Card 0 of 10</div>
-          <div class="reminder" id="tradeReminder">Draw two cards, then trade.</div>
-          <p class="muted">This is a reminder only. The app does not block trades.</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Investor Rewards Store</h2>
-        <table>
-          <thead>
-            <tr><th>Reward</th><th>Current Price</th><th>Set Price</th></tr>
-          </thead>
-          <tbody id="rewardsBody"></tbody>
-        </table>
-        <button onclick="applyInflation()">Apply Inflation: +2 to all rewards</button>
-      </div>
-
-      <div class="card">
-        <h2>Portfolio Formula</h2>
-        <div class="formula">Portfolio Value = Cash + Bank Value + QH Value + II Value + BZ Value</div>
-      </div>
-    </section>
-
-    <section id="students" class="tab">
-      <div class="card">
-        <h2>Add Student</h2>
-        <input id="newStudentName" placeholder="First name, nickname or initials">
-        <input id="newStudentCash" type="number" min="0" step="1" placeholder="Starting tickets">
-        <button onclick="addStudent()">Add Student</button>
-      </div>
-
-      <div class="card">
-        <h2>Student List</h2>
-        <table>
-          <thead>
-            <tr><th>Name</th><th>Cash</th><th>QH</th><th>II</th><th>BZ</th><th>Bank</th><th>Portfolio</th><th>Remove</th></tr>
-          </thead>
-          <tbody id="studentsBody"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="transactions" class="tab">
-      <div class="grid2">
-        <div class="card">
-          <h2>Enter Transaction</h2>
-          <label>Student</label>
-          <select id="txStudent"></select>
-
-          <label>Transaction Type</label>
-          <select id="txType" onchange="renderTransactionFields()">
-            <option value="buy">Buy shares</option>
-            <option value="sell">Sell shares</option>
-            <option value="deposit">Bank term deposit</option>
-            <option value="spend">Buy reward</option>
-            <option value="cash">Adjust cash</option>
-          </select>
-
-          <div id="txFields"></div>
-          <button onclick="submitTransaction()">Submit Transaction</button>
-        </div>
-
-        <div class="card">
-          <h2>Selected Student</h2>
-          <div id="selectedStudentSummary" class="summary"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="cards" class="tab">
-      <div class="grid2">
-        <div class="card">
-          <h2>Market Cards</h2>
-          <label>Lesson Deck</label>
-          <select id="lessonSelect" onchange="changeLesson()">
-            <option value="1">Lesson 1</option>
-            <option value="2">Lesson 2</option>
-            <option value="3">Lesson 3</option>
-          </select>
-          <button onclick="shuffleDeck()">Shuffle Deck</button>
-          <button onclick="resetDeck()">Reset Deck</button>
-          <button class="bigButton" onclick="drawCard()">Draw Next Card</button>
-          <p class="muted">Lesson 2 shuffle keeps Market Crash near the middle.</p>
-        </div>
-
-        <div class="card market-card" id="currentCard">
-          <h2>No card drawn</h2>
-          <p>Choose a lesson deck and draw a market card.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="leaderboard" class="tab">
-      <div class="card">
-        <h2>Leaderboard</h2>
-        <table>
-          <thead><tr><th>Rank</th><th>Student</th><th>Portfolio Value</th><th>Strategy Note</th></tr></thead>
-          <tbody id="leaderboardBody"></tbody>
-        </table>
-      </div>
-
-      <div class="card">
-        <h2>Portfolio Graph</h2>
-        <select id="graphStudent" onchange="drawGraph()"></select>
-        <canvas id="graph" width="950" height="360"></canvas>
-      </div>
-    </section>
-
-    <section id="backup" class="tab">
-      <div class="card">
-        <h2>Backup and Export</h2>
-        <button onclick="exportJson()">Export JSON Backup</button>
-        <button onclick="document.getElementById('importJson').click()">Import JSON Backup</button>
-        <input id="importJson" type="file" accept=".json" hidden onchange="importJsonFile(event)">
-        <button onclick="exportCsv()">Export CSV</button>
-        <button class="danger" onclick="resetAll()">Reset Everything</button>
-        <p class="muted">All data is stored in this browser only using localStorage.</p>
-      </div>
-
-      <div class="card">
-        <h2>Activity Log</h2>
-        <pre id="activityLog"></pre>
-      </div>
-    </section>
-  </main>
-
-  <dialog id="marketDialog">
-    <h2>Edit Market</h2>
-    <div id="marketEditor"></div>
-    <button onclick="saveMarketEditor()">Save</button>
-    <button onclick="document.getElementById('marketDialog').close()">Cancel</button>
-  </dialog>
-
-  <script src="app.js"></script>
-</body>
-</html>
+<header><div><h1>Investor Challenge Tracker</h1><p>Teacher dashboard for the market simulation</p></div>
+<div class="top-actions"><button id="exportBtn">Export Backup</button><label class="fileBtn">Import Backup <input id="importFile" type="file" accept="application/json"></label><button id="resetBtn" class="danger">Reset</button></div></header>
+<main>
+<section class="grid two">
+<div class="card"><h2>Market Board</h2><table id="marketTable"><thead><tr><th>Company</th><th>Ticker</th><th>Price</th><th>Change</th><th>Shares Available</th></tr></thead><tbody></tbody></table>
+<div class="market-controls"><label>Lesson<select id="lessonSelect"><option value="1">Lesson 1</option><option value="2">Lesson 2</option><option value="3">Lesson 3</option></select></label><button id="shuffleDeckBtn">Shuffle Deck</button><button id="drawCardBtn" class="primary">Draw Next Card</button><button id="undoCardBtn">Undo Last Card</button></div>
+<div id="drawnCard" class="event-card">No card drawn yet.</div><p id="tradeReminder" class="reminder">Draw two cards, then offer a trading round.</p></div>
+<div class="card"><h2>Investor Rewards Store</h2><table id="rewardsTable"><thead><tr><th>Prize Box</th><th>Price</th><th>Set Price</th></tr></thead><tbody></tbody></table><p class="hint">Update reward prices when inflation hits.</p></div>
+</section>
+<section class="grid two">
+<div class="card"><h2>Students</h2><div class="inline-form"><input id="studentName" placeholder="Student name / nickname / initials"><input id="studentCash" type="number" min="0" step="1" placeholder="Starting tickets"><button id="addStudentBtn" class="primary">Add Student</button></div><table id="studentsTable"><thead><tr><th>Name</th><th>Cash</th><th>QH</th><th>II</th><th>BZ</th><th>Bank</th><th>Total</th><th></th></tr></thead><tbody></tbody></table></div>
+<div class="card"><h2>Teacher Entry</h2><label>Student <select id="actionStudent"></select></label><div class="grid three compact"><label>Action<select id="actionType"><option value="buy">Buy Shares</option><option value="sell">Sell Shares</option><option value="spend">Buy Reward</option><option value="deposit">Bank Deposit</option><option value="withdraw">Withdraw Deposit</option><option value="cashAdjust">Adjust Cash</option></select></label><label>Company / Prize / Term<select id="actionTarget"></select></label><label>Amount<input id="actionAmount" type="number" step="1" value="1"></label></div><button id="applyActionBtn" class="primary">Apply Action</button><p class="hint">Bank deposits must be in 10-ticket lots. Selling is always back to the market.</p></div>
+</section>
+<section class="grid two">
+<div class="card"><h2>Portfolio History</h2><table id="historyTable"><thead><tr><th>Round</th><th>Student</th><th>Cash</th><th>Bank</th><th>QH Value</th><th>II Value</th><th>BZ Value</th><th>Total</th></tr></thead><tbody></tbody></table></div>
+<div class="card"><h2>Student Graph</h2><label>Graph student <select id="graphStudent"></select></label><canvas id="graphCanvas" width="720" height="360"></canvas></div>
+</section>
+<section class="card"><h2>Activity Log</h2><textarea id="logBox" readonly></textarea></section>
+</main><script src="app.js"></script></body></html>
